@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
-// Use the port Render provides
+// Use the port provided by Render or default to 5000
 const port = process.env.PORT || 5000;
 
 const io = new Server(server, {
