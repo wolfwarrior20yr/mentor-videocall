@@ -6,6 +6,8 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
+const PORT = process.env.PORT || 5000; // Use Render-assigned port or fallback to 5000
+
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -34,6 +36,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () => {
-  console.log("Server is running on port 5000");
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
