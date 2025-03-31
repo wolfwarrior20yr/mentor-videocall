@@ -27,42 +27,42 @@ const io = new Server(server, {
 
 // Event listeners for socket connections
 io.on("connection", (socket) => {
-  console.log("New user connected:", socket.id);
+  console.log(`✅ New user connected: ${socket.id}`);
 
   // Emit the user's socket ID to them
   socket.emit("your-id", socket.id);
 
   // Handle incoming call requests
   socket.on("call-user", ({ userToCall, signalData, from }) => {
-    console.log(`Incoming call from ${from} to ${userToCall}`);
+    console.log(`📞 Call from ${from} to ${userToCall}`);
     io.to(userToCall).emit("call-user", { signal: signalData, from });
   });
 
   // Handle accepting a call
   socket.on("accept-call", ({ to, signal }) => {
-    console.log(`Call accepted by ${to}`);
+    console.log(`✔️ Call accepted by ${to}`);
     io.to(to).emit("call-accepted", signal);
   });
 
   // Handle ending a call
   socket.on("end-call", ({ to }) => {
-    console.log(`Call ended by ${socket.id}`);
+    console.log(`❌ Call ended by ${socket.id}`);
     io.to(to).emit("call-ended");
   });
 
   // Handle user disconnection
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+    console.log(`🚪 User disconnected: ${socket.id}`);
   });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error("❗ Server error:", err.stack);
   res.status(500).send("Something went wrong!");
 });
 
 // Start server
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`🚀 Server is running on port ${port}`);
 });
